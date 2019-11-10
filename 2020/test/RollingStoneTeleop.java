@@ -40,13 +40,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import team25core.FourWheelDirectDrivetrain;
 import team25core.GamepadTask;
+import team25core.MechanumGearedDrivetrain;
 import team25core.Robot;
 import team25core.RobotEvent;
 import team25core.RunToEncoderValueTask;
 import team25core.TankDriveTask;
-import team25core.TankMechanumControlSchemeReverse;
+//import team25core.TankMechanumControlSchemeReverse;
 import team25core.TeleopDriveTask;
 
 @TeleOp(name = "LeagueMeet0")
@@ -82,7 +82,7 @@ public class RollingStoneTeleop extends Robot {
 
     private TeleopDriveTask drivetask;
 
-    private FourWheelDirectDrivetrain drivetrain;
+    private MechanumGearedDrivetrain drivetrain;
 
     private static final int TICKS_PER_INCH = 79;
 
@@ -115,10 +115,9 @@ public class RollingStoneTeleop extends Robot {
        linearPos = telemetry.addData("linearpos", 0);
 
         //emily's
+        //TankMechanumControlSchemeReverse scheme = new TankMechanumControlSchemeReverse(gamepad1);
 
-        TankMechanumControlSchemeReverse scheme = new TankMechanumControlSchemeReverse(gamepad1);
-
-        drivetrain = new FourWheelDirectDrivetrain(frontRight, rearRight, frontLeft, rearLeft);
+        drivetrain = new MechanumGearedDrivetrain( 360, frontRight, rearRight, frontLeft, rearLeft);
         drivetrain.setNoncanonicalMotorDirection();
     }
 
