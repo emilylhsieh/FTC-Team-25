@@ -59,7 +59,7 @@ public class SkyStoneAutoMeet1 extends Robot {
     private DeadReckonPath rmoveAcross;
     private DeadReckonPath endRedFoundation;
     private DeadReckonPath endBlueFoundation;
-    private DeadReckonPath endFoundation;
+    private DeadReckonPath endFoundationPath;
 
     private double confidence;
     private double left;
@@ -115,14 +115,14 @@ public class SkyStoneAutoMeet1 extends Robot {
                     allianceTlm.setValue("BLUE");
                     depotPath = blueDepotPath;
                     foundationPath = blueFoundationPath;
-                    foundationPath = endBlueFoundation;
+                    endFoundationPath = endBlueFoundation;
                     break;
                 case BUTTON_B_DOWN:
                     allianceColor = AllianceColor1.RED;
                     allianceTlm.setValue("RED");
                     depotPath = redDepotPath;
                     foundationPath = redFoundationPath;
-                    foundationPath = endRedFoundation;
+                    endFoundationPath = endRedFoundation;
                     break;
                 case BUTTON_Y_DOWN:
                     robotPosition = RobotPosition1.BUILD_SITE;
@@ -186,7 +186,7 @@ public class SkyStoneAutoMeet1 extends Robot {
 
 
         //starts during autonomous
-        this.addTask(new DeadReckonTask(this, foundationPath, drivetrain1){
+        this.addTask(new DeadReckonTask(this, endFoundationPath, drivetrain1){
             @Override
             public void handleEvent(RobotEvent e) {
                 DeadReckonEvent path = (DeadReckonEvent) e;
