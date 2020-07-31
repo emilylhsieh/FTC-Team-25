@@ -1,4 +1,4 @@
-package opmodes.Regionals;
+package TestRig;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
