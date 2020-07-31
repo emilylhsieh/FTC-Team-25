@@ -2,6 +2,7 @@ package TestRig;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import team25core.GamepadTask;
 import team25core.Robot;
 
 public class SelectModes {
@@ -26,11 +27,29 @@ public class SelectModes {
     private TestRigMode mode;
     private Telemetry.Item msgTelem;
     private Telemetry.Item modeTelem;
+    private GamepadTask myGamepad1Task;
 
     SelectModes(Robot theirRobot) {
         myRobot = theirRobot;
         mode = TestRigMode.INDEP_MOTOR;
-        msgTelem = myRobot.telemetry.addData("Use right trigger to toggle through modes");
+        msgTelem = myRobot.telemetry.addData("Use right trigger to toggle through modes", "");
         modeTelem = myRobot.telemetry.addData("Current mode: " , mode);
+    }
+
+    protected TestRigMode setUpGamepad1ForModeSelection(GamepadTask.GamepadEvent event) {
+        switch (event.kind) {
+            case RIGHT_TRIGGER_DOWN:
+                mode = mode.nextMode();
+                modeTelem.setValue(mode);
+                break;
+            case BUTTON_X_DOWN:
+                msgTelem.setValue("Completed mode selection");
+                //Optional remove gamepad task after completed selection
+                //myRobot.removeTask(myGamepad1Task);
+                break;
+            default:
+                msgTelem.setValue("Use right trigger to select mode, use button X to exit mode selection");
+        }
+        return mode;
     }
 }
