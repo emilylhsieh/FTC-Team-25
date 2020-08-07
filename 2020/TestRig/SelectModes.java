@@ -33,13 +33,16 @@ public class SelectModes {
         myRobot = theirRobot;
         mode = TestRigMode.INDEP_MOTOR;
         msgTelem = myRobot.telemetry.addData("Use right trigger to toggle through modes", "");
-        modeTelem = myRobot.telemetry.addData("Current mode: " , mode);
+        modeTelem = myRobot.telemetry.addData("Current mode: ", mode);
     }
 
-    protected TestRigMode setUpGamepad1ForModeSelection(GamepadTask.GamepadEvent event) {
+
+
+    protected void setUpGamepad1ForModeSelection(GamepadTask.GamepadEvent event) {
         switch (event.kind) {
             case RIGHT_TRIGGER_DOWN:
                 mode = mode.nextMode();
+                // prints the next mode to the driver station phone
                 modeTelem.setValue(mode);
                 break;
             case BUTTON_X_DOWN:
@@ -50,6 +53,6 @@ public class SelectModes {
             default:
                 msgTelem.setValue("Use right trigger to select mode, use button X to exit mode selection");
         }
-        return mode;
+        return;
     }
 }
