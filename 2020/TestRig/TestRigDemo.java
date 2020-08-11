@@ -2,18 +2,29 @@ package TestRig;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import TestRig.SelectModes;
 import team25core.GamepadTask;
 import team25core.Robot;
 import team25core.RobotEvent;
-import team25core.StandardFourMotorRobot;
 
 @TeleOp(name = "Test Rig Demo")
 //@Disabled
 
 public class TestRigDemo extends Robot {
+    // enum selects which configuration we are currently using on the phone
+    public enum GamepadControlChoice {
+        DRIVE_CONTROL,
+        INDEP_MOTOR_CONTROL,
+        SELECT_TESTRIG_MODE,
+        SERVO_CONTROL,
+        SERVO_N_DRIVE_CONTROL;
+    }
+
     private GamepadTask gamepad1Task;
     private SelectModes modes;
+    private SelectModes.TestRigMode selectedTestRigMode;
+    // initializing gamepadControlChoice (of type GamepadControlChoice) to GamepadControlChoice.SELECT_TESTRIG_MODE;
+    private GamepadControlChoice gamepadControlChoice = GamepadControlChoice.SELECT_TESTRIG_MODE;
+    private SelectModes.TestRigMode selectedMode;
 
     // this init method is called when the init button is pressed on the driver station
     @Override
@@ -27,18 +38,35 @@ public class TestRigDemo extends Robot {
 
     }
 
+    public void setTestRigMode(SelectModes.TestRigMode modeFromSelectModes) {
+        selectedTestRigMode = modeFromSelectModes;
+
+
+    }
+
     // the handleEvent method is called after the task is added and a control is pressed
     @Override
     public void handleEvent(RobotEvent e) {
-        GamepadTask.GamepadEvent event = (GamepadTask.GamepadEvent) e;
+        // e (robot event) cast to variable of type GamepadTask.GamepadEvent
+        if (e instanceof GamepadTask.GamepadEvent) {
+            GamepadTask.GamepadEvent event = (GamepadTask.GamepadEvent) e;
 
-        switch (event.kind) {
-            case BUTTON_X_DOWN:
-                // do whatever when button is pressed
-                break;
-            case RIGHT_TRIGGER_DOWN:
-                // do whatever when trigger is pressed
-                break;
+            switch (gamepadControlChoice) {
+                case SELECT_TESTRIG_MODE:
+                    // calls the setUpGamepad1ForModeSelection method that is defined in the SelectModes class
+                    modes.setUpGamepad1ForModeSelection(event);
+                    break;
+                case INDEP_MOTOR_CONTROL:
+                    break;
+                case SERVO_CONTROL:
+                    break;
+                case DRIVE_CONTROL:
+                    break;
+                case SERVO_N_DRIVE_CONTROL:
+                    break;
+                default:
+                    // print to driver station
+            }
         }
     }
 

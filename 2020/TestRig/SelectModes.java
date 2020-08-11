@@ -39,6 +39,10 @@ public class SelectModes {
 
 
     protected void setUpGamepad1ForModeSelection(GamepadTask.GamepadEvent event) {
+
+        // casting instance of myRobot(generic robot type) into TestRigDemo type
+        TestRigDemo demoInstance = (TestRigDemo) myRobot;
+
         switch (event.kind) {
             case RIGHT_TRIGGER_DOWN:
                 mode = mode.nextMode();
@@ -46,6 +50,7 @@ public class SelectModes {
                 modeTelem.setValue(mode);
                 break;
             case BUTTON_X_DOWN:
+                demoInstance.setTestRigMode(mode);
                 msgTelem.setValue("Completed mode selection");
                 //Optional remove gamepad task after completed selection
                 //myRobot.removeTask(myGamepad1Task);
