@@ -1,4 +1,4 @@
-package opmodes.Regionals;
+package TestRig;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -15,9 +15,9 @@ class ServoMode {
     private Servo servo4;
 
     public void init() {
-        servo1 = hardwareMap.servo.get("servo1");
-        servo2 = hardwareMap.servo.get("servo2");
-        servo3 = hardwareMap.servo.get("servo3");
-        servo4 = hardwareMap.servo.get("servo4");
+        // servo1 = hardwareMap.servo.get("servo1");
+        // servo2 = hardwareMap.servo.get("servo2");
+        // servo3 = hardwareMap.servo.get("servo3");
+        // servo4 = hardwareMap.servo.get("servo4");
     }
 }
