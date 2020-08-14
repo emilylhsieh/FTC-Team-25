@@ -73,6 +73,18 @@ public class TestRigDemo extends Robot {
     @Override
     public void start() {
 
+        if (selectedTestRigMode == SelectModes.TestRigMode.INDEP_MOTOR) {
+            // do independent motor stuff
+        }
+        if (selectedTestRigMode == SelectModes.TestRigMode.SERVO) {
+            // do servo stuff
+        }
+        if (selectedTestRigMode == SelectModes.TestRigMode.DRIVE) {
+            // do motor stuff
+        }
+        if (selectedTestRigMode == SelectModes.TestRigMode.SERVO_N_DRIVE) {
+            // do servo and drive stuff
+        }
     }
 }
 
