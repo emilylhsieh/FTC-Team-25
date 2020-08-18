@@ -41,6 +41,23 @@ public class TestRigDemo extends Robot {
     public void setTestRigMode(SelectModes.TestRigMode modeFromSelectModes) {
         selectedTestRigMode = modeFromSelectModes;
 
+        switch (selectedTestRigMode) {
+            case INDEP_MOTOR:
+                gamepadControlChoice = INDEP_MOTOR_CONTROL;
+                break;
+            case SERVO:
+                gamepadControlChoice = SERVO_CONTROL;
+                break;
+            case DRIVE:
+                gamepadControlChoice = DRIVE_CONTROL;
+                break;
+            case SERVO_N_DRIVE:
+                gamepadControlChoice = SERVO_N_DRIVE_CONTROL;
+                break;
+            default:
+                // Print useful error message
+        }
+
 
     }
 
