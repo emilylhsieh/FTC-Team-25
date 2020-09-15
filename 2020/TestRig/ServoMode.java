@@ -2,7 +2,15 @@ package TestRig;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import team25core.GamepadTask;
+import team25core.Robot;
 
 class ServoMode {
     public enum ServoPosition {
@@ -12,11 +20,45 @@ class ServoMode {
     }
 
     List<Servo> servoList;
+    Robot myRobot;
+    int numServos;
+    private Map<Servo, Telemetry.Item> servoTlmMap;
 
-    public void init() {
-        // servo1 = hardwareMap.servo.get("servo1");
-        // servo2 = hardwareMap.servo.get("servo2");
-        // servo3 = hardwareMap.servo.get("servo3");
+    //method getServoName is given a servo and returns the name of the servo
+    String getServoName(Servo servo){
+        //getNamesOf() is method that returns all the names by which the device is known
+        Set<String> names = myRobot.hardwareMap.getNamesOf(servo);
+        //if device has more than one name use first name
+        for (String name: names) {
+            return name;
+        }
+        return "No Servo Name Found";
+    }
+    private Map<Servo, Telemetry.Item> populateServoTlmMap(List<Servo> servoList) {
+        Map<Servo, Telemetry.Item> tmpServoTlmMap = null;
+        for (Servo servo: Collections.emptyList(servoList)){
+            String servoName = getServoName(servo);
+        }
+    }
+
+    public ServoMode (Robot robot) {
+        myRobot =  robot;
+        //get all servos in phone configuration
+        servoList = myRobot.hardwareMap.getAll(Servo.class);
+        //get number of servos
+        numServos = servoList.size();
+        if (numServos == 0) {
+            //printing out to driver station phone there are no servos
+            Telemetry.Item none = myRobot.telemetry.addData("No Servos", " ");
+        }
+        //populate servo to Telemetry.Item map
+        servoTlmMap = populateServoTlmMap(servoList);
+    }
+
+        public void init() {
+            // servo1 = hardwareMap.servo.get("servo1");
+            // servo2 = hardwareMap.servo.get("servo2");
+            // servo3 = hardwareMap.servo.get("servo3");
         // servo4 = hardwareMap.servo.get("servo4");
 
     }
