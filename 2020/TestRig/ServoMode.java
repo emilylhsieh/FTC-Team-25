@@ -34,11 +34,18 @@ class ServoMode {
         }
         return "No Servo Name Found";
     }
+    //populateServoTlmMap is a method that is given a list a servos and returns a map.
+    // given a servo, the mao returns the corresponding Telemetry.Item.
+    // the telemetry item is used to print the servo name to the driver station phone.
     private Map<Servo, Telemetry.Item> populateServoTlmMap(List<Servo> servoList) {
         Map<Servo, Telemetry.Item> tmpServoTlmMap = null;
+        //each loop of for loop wll give next servo on servo list
         for (Servo servo: Collections.emptyList(servoList)){
             String servoName = getServoName(servo);
+            Telemetry.Item servoTlm = myRobot.telemetry.addData(servoName," ");
+            tmpServoTlmMap.put(servo, servoTlm);
         }
+        return(tmpServoTlmMap);
     }
 
     public ServoMode (Robot robot) {
