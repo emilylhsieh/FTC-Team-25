@@ -34,6 +34,10 @@ class ServoMode {
         }
         return "No Servo Name Found";
     }
+
+
+    //taking in list of servos and populating a list of Telemetry.Items, populating ServoTlmMap.
+    //modifier is private
     private Map<Servo, Telemetry.Item> populateServoTlmMap(List<Servo> servoList) {
         Map<Servo, Telemetry.Item> tmpServoTlmMap = null;
         for (Servo servo: Collections.emptyList(servoList)){
@@ -41,6 +45,9 @@ class ServoMode {
         }
     }
 
+
+    //constructor, called to instantiate a ServoMode object and allocate it memory
+    //modifier is public, can be called within this class, package, and other packages
     public ServoMode (Robot robot) {
         myRobot =  robot;
         //get all servos in phone configuration
@@ -55,14 +62,9 @@ class ServoMode {
         servoTlmMap = populateServoTlmMap(servoList);
     }
 
-        public void init() {
-            // servo1 = hardwareMap.servo.get("servo1");
-            // servo2 = hardwareMap.servo.get("servo2");
-            // servo3 = hardwareMap.servo.get("servo3");
-        // servo4 = hardwareMap.servo.get("servo4");
 
-    }
-
+    //sets up Gamepad1 for servo controls, type void so no return
+    //modifier is protected
     protected void setUpGamepad1ForServoControl(GamepadTask.GamepadEvent event) {
 
         // casting instance of myRobot(generic robot type) into TestRigDemo type
