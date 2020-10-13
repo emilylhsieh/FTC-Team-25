@@ -19,11 +19,31 @@ class ServoMode {
         SERVO_HIGH,
     }
 
+    public enum ServoDirection {
+        STOP,
+        CLOCKWISE,
+        COUNTER_CLOCKWISE;
+
+        public ServoMode.ServoDirection nextDirection() {
+            ServoMode.ServoDirection currentDirection = values()[ordinal()];
+
+            if (currentDirection != COUNTER_CLOCKWISE) {
+                return values()[ordinal() +1];
+            } else {
+                return values()[0];
+            }
+        }
+    }
+
     List<Servo> servoList;
     Robot myRobot;
     int numServos;
     private Map<Servo, Telemetry.Item> servoTlmMap;
     private Servo activeServo;
+    private ServoDirection servo1Direction;
+    private ServoDirection servo2Direction;
+    private ServoDirection servo3Direction;
+    private ServoDirection servo4Direction;
 
     //method getServoName is given a servo and returns the name of the servo
     String getServoName(Servo servo){
@@ -64,6 +84,13 @@ class ServoMode {
         return(firstServo);
     }
 
+    private Servo getNthServoInMap(Map<Servo, Telemetry.Item> servoMap, int n) {
+
+        Servo nthServo = ((Servo)servoMap.keySet().toArray()[n - 1]);
+
+        return(nthServo);
+    }
+
     //constructor, called to instantiate a ServoMode object and allocate it memory
     //modifier is public, can be called within this class, package, and other packages
     public ServoMode (Robot robot) {
@@ -72,6 +99,11 @@ class ServoMode {
         servoList = myRobot.hardwareMap.getAll(Servo.class);
         //get number of servos
         numServos = servoList.size();
+        //set initiation servo directions
+        servo1Direction = ServoDirection.STOP;
+        servo2Direction = ServoDirection.STOP;
+        servo3Direction = ServoDirection.STOP;
+        servo4Direction = ServoDirection.STOP;
         if (numServos == 0) {
             //printing out to driver station phone there are no servos
             Telemetry.Item none = myRobot.telemetry.addData("No Servos", " ");
@@ -97,15 +129,23 @@ class ServoMode {
                 break;
             case DPAD_UP_DOWN:
                 // select servo 1
+                getFirstServoInMap(servoTlmMap);
+                servo1Direction.nextDirection();
                 break;
             case DPAD_RIGHT_DOWN:
                 // select servo 2
+                getNthServoInMap(servoTlmMap,2);
+                servo2Direction.nextDirection();
                 break;
             case DPAD_DOWN_DOWN:
                 // select servo 3
+                getNthServoInMap(servoTlmMap,3);
+                servo3Direction.nextDirection();
                 break;
             case DPAD_LEFT_DOWN:
                 // select servo 4
+                getNthServoInMap(servoTlmMap,4);
+                servo4Direction.nextDirection();
                 break;
             default:
                 // msgTelem.setValue("Use right trigger to select mode, use button X to exit mode selection");
