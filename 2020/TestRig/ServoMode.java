@@ -44,6 +44,11 @@ class ServoMode {
     private ServoDirection servo2Direction;
     private ServoDirection servo3Direction;
     private ServoDirection servo4Direction;
+    private Telemetry.Item servo1DirectionTlm = telemetry.addData("servo1 Direction:", servoDirection.STOP);
+    private Telemetry.Item servo2DirectionTlm = telemetry.addData("servo1 Direction:", servoDirection.STOP);
+    private Telemetry.Item servo3DirectionTlm = telemetry.addData("servo1 Direction:", servoDirection.STOP);
+    private Telemetry.Item servo4DirectionTlm = telemetry.addData("servo1 Direction:", servoDirection.STOP);
+    private ServoDirection currentDirection;
 
     //method getServoName is given a servo and returns the name of the servo
     String getServoName(Servo servo){
@@ -130,22 +135,26 @@ class ServoMode {
             case DPAD_UP_DOWN:
                 // select servo 1
                 getFirstServoInMap(servoTlmMap);
-                servo1Direction.nextDirection();
+                servo1Direction = servo1Direction.nextDirection();
+                servo1DirectionTlm.setValue(servo1Direction);
                 break;
             case DPAD_RIGHT_DOWN:
                 // select servo 2
                 getNthServoInMap(servoTlmMap,2);
-                servo2Direction.nextDirection();
+                servo2Direction = servo2Direction.nextDirection();
+                servo2DirectionTlm.setValue(servo2Direction);
                 break;
             case DPAD_DOWN_DOWN:
                 // select servo 3
                 getNthServoInMap(servoTlmMap,3);
-                servo3Direction.nextDirection();
+                servo3Direction = servo3Direction.nextDirection();
+                servo3DirectionTlm.setValue(servo3Direction);
                 break;
             case DPAD_LEFT_DOWN:
                 // select servo 4
                 getNthServoInMap(servoTlmMap,4);
-                servo4Direction.nextDirection();
+                servo4Direction = servo4Direction.nextDirection();
+                servo4DirectionTlm.setValue(servo4Direction);
                 break;
             default:
                 // msgTelem.setValue("Use right trigger to select mode, use button X to exit mode selection");
