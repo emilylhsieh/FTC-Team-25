@@ -41,6 +41,23 @@ public class TestRigDemo extends Robot {
     public void setTestRigMode(SelectModes.TestRigMode modeFromSelectModes) {
         selectedTestRigMode = modeFromSelectModes;
 
+        switch (selectedTestRigMode) {
+            case INDEP_MOTOR:
+                gamepadControlChoice = INDEP_MOTOR_CONTROL;
+                break;
+            case SERVO:
+                gamepadControlChoice = SERVO_CONTROL;
+                break;
+            case DRIVE:
+                gamepadControlChoice = DRIVE_CONTROL;
+                break;
+            case SERVO_N_DRIVE:
+                gamepadControlChoice = SERVO_N_DRIVE_CONTROL;
+                break;
+            default:
+                // Print useful error message
+        }
+
 
     }
 
@@ -73,6 +90,18 @@ public class TestRigDemo extends Robot {
     @Override
     public void start() {
 
+        if (selectedTestRigMode == SelectModes.TestRigMode.INDEP_MOTOR) {
+            // do independent motor stuff
+        }
+        if (selectedTestRigMode == SelectModes.TestRigMode.SERVO) {
+            // do servo stuff
+        }
+        if (selectedTestRigMode == SelectModes.TestRigMode.DRIVE) {
+            // do motor stuff
+        }
+        if (selectedTestRigMode == SelectModes.TestRigMode.SERVO_N_DRIVE) {
+            // do servo and drive stuff
+        }
     }
 }
 

@@ -29,6 +29,8 @@ public class SelectModes {
     private Telemetry.Item modeTelem;
     private GamepadTask myGamepad1Task;
 
+
+    //constructor, used to instantiate a SelectModes object and allocate it memory
     SelectModes(Robot theirRobot) {
         myRobot = theirRobot;
         mode = TestRigMode.INDEP_MOTOR;
@@ -37,7 +39,8 @@ public class SelectModes {
     }
 
 
-
+    //sets Gamepad1 up for mode selection, type void so it returns nothing
+    //modifier is protected
     protected void setUpGamepad1ForModeSelection(GamepadTask.GamepadEvent event) {
 
         // casting instance of myRobot(generic robot type) into TestRigDemo type
