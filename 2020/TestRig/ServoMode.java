@@ -36,6 +36,7 @@ class ServoMode {
     }
 
     List<Servo> servoList;
+    List<ServoDirection> servoDirectionList;
     Robot myRobot;
     int numServos;
     private Map<Servo, Telemetry.Item> servoTlmMap;
@@ -44,11 +45,12 @@ class ServoMode {
     private ServoDirection servo2Direction;
     private ServoDirection servo3Direction;
     private ServoDirection servo4Direction;
-    private Telemetry.Item servo1DirectionTlm = telemetry.addData("servo1 Direction:", servoDirection.STOP);
-    private Telemetry.Item servo2DirectionTlm = telemetry.addData("servo1 Direction:", servoDirection.STOP);
-    private Telemetry.Item servo3DirectionTlm = telemetry.addData("servo1 Direction:", servoDirection.STOP);
-    private Telemetry.Item servo4DirectionTlm = telemetry.addData("servo1 Direction:", servoDirection.STOP);
+    private Telemetry.Item servo1DirectionTlm;
+    private Telemetry.Item servo2DirectionTlm;
+    private Telemetry.Item servo3DirectionTlm;
+    private Telemetry.Item servo4DirectionTlm;
     private ServoDirection currentDirection;
+    List<Integer> servoPositions;
 
     //method getServoName is given a servo and returns the name of the servo
     String getServoName(Servo servo){
@@ -96,6 +98,25 @@ class ServoMode {
         return(nthServo);
     }
 
+    private void driveServos(){
+        //calculate servo positions
+        //going through directions in list and setting to 0 or 1
+        for(ServoDirection direction :servoDirectionList) {
+            if (direction == ServoDirection.CLOCKWISE) {
+                servoPositions.add(1);
+            } else if (direction == ServoDirection.COUNTER_CLOCKWISE) {
+                servoPositions.add(0);
+            } else {
+                //handle case when servo is stopped
+            }
+        }
+        //drive the servos
+        //getting each servo and setting them to calculated position
+        for(int i = 1; i <= 4; i = i + 1) {
+            getNthServoInMap(servoTlmMap,i).setPosition((float)servoPositions.get(i - 1)/(float)256.0 );
+        }
+    }
+
     //constructor, called to instantiate a ServoMode object and allocate it memory
     //modifier is public, can be called within this class, package, and other packages
     public ServoMode (Robot robot) {
@@ -109,6 +130,10 @@ class ServoMode {
         servo2Direction = ServoDirection.STOP;
         servo3Direction = ServoDirection.STOP;
         servo4Direction = ServoDirection.STOP;
+        servo1DirectionTlm = myRobot.telemetry.addData("servo1 Direction:", ServoDirection.STOP);
+        servo2DirectionTlm = myRobot.telemetry.addData("servo2 Direction:", ServoDirection.STOP);
+        servo3DirectionTlm = myRobot.telemetry.addData("servo3 Direction:", ServoDirection.STOP);
+        servo4DirectionTlm = myRobot.telemetry.addData("servo4 Direction:", ServoDirection.STOP);
         if (numServos == 0) {
             //printing out to driver station phone there are no servos
             Telemetry.Item none = myRobot.telemetry.addData("No Servos", " ");
@@ -131,6 +156,7 @@ class ServoMode {
         switch (event.kind) {
             case RIGHT_TRIGGER_DOWN:
                 // drive servo
+                driveServos();
                 break;
             case DPAD_UP_DOWN:
                 // select servo 1
