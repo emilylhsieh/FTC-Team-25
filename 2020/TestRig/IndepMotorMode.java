@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import team25core.GamepadTask;
 import team25core.Robot;
 
 public class IndepMotorMode {
@@ -59,6 +60,34 @@ public class IndepMotorMode {
         motor3DirectionTlm = myRobot.telemetry.addData("motor3 Direction", motor3Direction);
         motor4DirectionTlm = myRobot.telemetry.addData("motor4 Direction", motor4Direction);
 
+    }
+
+    protected void setUpGamepadForMotorControl(GamepadTask .GamepadEvent event) {
+
+        // casting instance of myRobot(generic robot type) into TestRigDemo type
+        TestRigDemo demoInstance = (TestRigDemo) myRobot;
+
+        switch (event.kind) {
+            case BUTTON_Y_DOWN:
+                //select motor1
+                motor1Direction = motor1Direction.nextDirection();
+                break;
+            case BUTTON_A_DOWN:
+                //select motor2
+                motor2Direction = motor2Direction.nextDirection();
+                break;
+            case BUTTON_B_DOWN:
+                //select motor3
+                motor3Direction = motor3Direction.nextDirection();
+                break;
+            case BUTTON_X_DOWN:
+                //select motor4
+                motor4Direction = motor4Direction.nextDirection();
+                break;
+            case RIGHT_TRIGGER_DOWN:
+                //drive motors
+                break;
+        }
     }
 
 }
