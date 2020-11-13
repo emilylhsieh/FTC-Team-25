@@ -94,23 +94,23 @@ public class UltimateGoalTeleop extends StandardFourMotorRobot {
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
 
         //mapping wobble grab servo
-        wobbleGrab = hardwareMap.servo.get("wobbleGrabServo");
+        // wobbleGrab = hardwareMap.servo.get("wobbleGrabServo");
 
         //mapping the launch mech and intake mech
-        launchMech = hardwareMap.get(DcMotor.class, "launchMech");
-        intakeMech = hardwareMap.get(DcMotor.class, "intakeMech");
+        // launchMech = hardwareMap.get(DcMotor.class, "launchMech");
+        // intakeMech = hardwareMap.get(DcMotor.class, "intakeMech");
 
         //mapping wobble lift motor
-        wobbleLift = hardwareMap.get(DcMotor.class, "wobbleLift");
+        // wobbleLift = hardwareMap.get(DcMotor.class, "wobbleLift");
 
         // using encoders to record ticks
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        launchMech.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intakeMech.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        wobbleLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // launchMech.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // intakeMech.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // wobbleLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
        /* launch = new OneWheelDirectDrivetrain(launchMech);
         launch.resetEncoders();
@@ -148,48 +148,48 @@ public class UltimateGoalTeleop extends StandardFourMotorRobot {
                 switch (gamepadEvent.kind) {
                     case BUTTON_X_DOWN:
                         // enable the launch mech
-                        launchMech.setPower(1);
+                       // launchMech.setPower(1);
                         break;
                     case BUTTON_X_UP:
                         // stop the launch mech
-                        launchMech.setPower(0);
+                       // launchMech.setPower(0);
                         break;
                     case BUTTON_Y_DOWN:
                         //enable the intake mech
-                        intakeMech.setPower(1);
+                       // intakeMech.setPower(1);
                     case BUTTON_Y_UP:
                         // stop the intake mech
-                        intakeMech.setPower(0);
+                       // intakeMech.setPower(0);
                         break;
                     case BUTTON_A_DOWN:
                         //enable the outtake mech
-                        intakeMech.setPower(-1);
+                       // intakeMech.setPower(-1);
                         break;
                     case BUTTON_A_UP:
                         // stop the outtake mech
-                        intakeMech.setPower(0);
+                       // intakeMech.setPower(0);
                         break;
                     case BUTTON_B_DOWN:
-                        //wobble servo close OR open depending on boolean toggle;
-                        if (wobbleGrabIsOpen) {
-                            wobbleGrab.setPosition(CLOSE_WOBBLE_SERVO);
-                            wobbleGrabIsOpen = false;
-                        } else {
-                            wobbleGrab.setPosition(OPEN_WOBBLE_SERVO);
-                            wobbleGrabIsOpen = true;
-                        }
+//                        //wobble servo close OR open depending on boolean toggle;
+//                        if (wobbleGrabIsOpen) {
+//                            wobbleGrab.setPosition(CLOSE_WOBBLE_SERVO);
+//                            wobbleGrabIsOpen = false;
+//                        } else {
+//                            wobbleGrab.setPosition(OPEN_WOBBLE_SERVO);
+//                            wobbleGrabIsOpen = true;
+//                        }
                         break;
                     case RIGHT_BUMPER_DOWN:
-                        //wobble lift up
-                        wobbleLift.setPower(1); //might have to be changed based on testing
-                        break;
-                    case RIGHT_TRIGGER_DOWN:
-                        //wobble lift down
-                        wobbleLift.setPower(-1); //might have to be changed based on testing
+//                        //wobble lift up
+//                        wobbleLift.setPower(1); //might have to be changed based on testing
+//                        break;
+//                    case RIGHT_TRIGGER_DOWN:
+//                        //wobble lift down
+//                        wobbleLift.setPower(-1); //might have to be changed based on testing
                         break;
                     case RIGHT_BUMPER_UP:
                     case RIGHT_TRIGGER_UP:
-                        wobbleLift.setPower(0);
+                       // wobbleLift.setPower(0);
                         break;
                 }
             }
