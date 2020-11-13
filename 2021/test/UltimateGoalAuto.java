@@ -2,6 +2,8 @@ package test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.RobotLog;
 
@@ -11,13 +13,14 @@ import team25core.DeadReckonPath;
 import team25core.DeadReckonTask;
 import team25core.GamepadTask;
 import team25core.MechanumGearedDrivetrain;
+import team25core.Robot;
 import team25core.RobotEvent;
 import team25core.StandardFourMotorRobot;
 
 
 @Autonomous(name = "Scrimmage1", group = "Team 25")
 // @Disabled
-public class UltimateGoalAuto extends StandardFourMotorRobot {
+public class UltimateGoalAuto extends Robot {
 
 
     private final static String TAG = "auto code for first scrimmage";
@@ -25,6 +28,10 @@ public class UltimateGoalAuto extends StandardFourMotorRobot {
     private Telemetry.Item loggingTlm;
     private DeadReckonPath launchLinePath;
     private final double STRAIGHT_SPEED = 0.5;
+    private DcMotor frontLeft;
+    private DcMotor frontRight;
+    private DcMotor backLeft;
+    private DcMotor backRight;
 
     DeadReckonPath path = new DeadReckonPath();
 
@@ -70,13 +77,18 @@ public class UltimateGoalAuto extends StandardFourMotorRobot {
     {
         launchLinePath = new DeadReckonPath();
         launchLinePath.stop();
-        launchLinePath.addSegment(DeadReckonPath.SegmentType.STRAIGHT, 12, -STRAIGHT_SPEED);
+        launchLinePath.addSegment(DeadReckonPath.SegmentType.STRAIGHT, 3, -STRAIGHT_SPEED);
     }
 
 
     @Override
     public void init()
     {
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
+
         //caption: what appears on the phone
         loggingTlm = telemetry.addData("distance traveled", "unknown");
 
