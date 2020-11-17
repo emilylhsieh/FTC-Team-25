@@ -206,18 +206,21 @@ class ServoMode {
                 currServo = getFirstServoInMap(servoTlmMap);
                 servo1Direction = servo1Direction.nextDirection();
                 servo1DirectionTlm.setValue(servo1Direction);
+                setDirection(servo1Direction, currServo, servo1DirectionTlm);
                 break;
             case DPAD_RIGHT_DOWN:
                 // select servo 2
                 currServo = getNthServoInMap(servoTlmMap,2);
                 servo2Direction = servo2Direction.nextDirection();
                 servo2DirectionTlm.setValue(servo2Direction);
+                setDirection(servo2Direction, currServo, servo2DirectionTlm);
                 break;
             case DPAD_DOWN_DOWN:
                 // select servo 3
                 currServo = getNthServoInMap(servoTlmMap,3);
                 servo3Direction = servo3Direction.nextDirection();
                 servo3DirectionTlm.setValue(servo3Direction);
+                setDirection(servo3Direction, currServo, servo3DirectionTlm);
                 break;
             case DPAD_LEFT_DOWN:
                 // select servo 4
