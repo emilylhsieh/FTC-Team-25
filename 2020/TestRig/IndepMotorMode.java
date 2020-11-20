@@ -1,6 +1,7 @@
 package TestRig;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 import team25core.GamepadTask;
 import team25core.Robot;
+import team25core.RunToEncoderValueTask;
 
 public class IndepMotorMode {
     public enum MotorDirection {
@@ -51,6 +53,7 @@ public class IndepMotorMode {
     private MotorDirection motor4Direction;
 
     private int motorPosDelta;
+    private double motorPower;
     private int motorPosAbsolute = MOTOR_ABS_POS_NOT_SET;
 
 
@@ -120,20 +123,25 @@ public class IndepMotorMode {
     }
 
     private void driveMotors(DcMotor motor1, DcMotor motor2, DcMotor motor3, DcMotor motor4 ) {
-        Telemetry.Item currentMotorTlm;
+        int newMotorPosition;
+        int currMotorPosition;
+        DcMotor.Direction motorDirection;
+
+        //create list of motors
         List<DcMotor> motorList = Arrays.asList(motor1, motor2, motor3, motor4);
-        //need to update to be motor position telemetry
-        currentMotorTlm = motor1DirectionTlm;
         //loop through all motors and set new motor position
 
         for(DcMotor motor : motorList) {
-            if(motorPosAbsolute >= 0) {
-                motor.setTargetPosition(MOTOR_ABS_POS_INIT_POSITION);
-                currentMotorTlm.setValue(MOTOR_ABS_POS_INIT_POSITION);
-                motorPosAbsolute = MOTOR_ABS_POS_NOT_SET;
-            } else {
-                setNewMotorPosition(motor, currentMotorTlm);
+            currMotorPosition = motor.getCurrentPosition();
+            motorDirection = motor.getDirection();
+            newMotorPosition = currMotorPosition;
+            if(motorDirection == DcMotor.Direction.FORWARD) {
+                newMotorPosition = currMotorPosition + motorPosDelta;
+            } else if(motorDirection == DcMotorSimple.Direction.REVERSE) {
+                newMotorPosition = currMotorPosition - motorPosDelta;
             }
+
+            myRobot.addTask(new RunToEncoderValueTask(myRobot, motor, newMotorPosition, motorPower));
         }
     }
 
@@ -170,6 +178,22 @@ public class IndepMotorMode {
             case RIGHT_TRIGGER_DOWN:
                 driveMotors(motor1, motor2, motor3, motor4);
                 //drive motors
+                break;
+            case DPAD_UP_DOWN:
+                motorPower = 1.0;
+                break;
+            case DPAD_DOWN_DOWN:
+                motorPower = 0.5;
+                break;
+            case DPAD_LEFT_DOWN:
+                //controlling distance we move the motor
+                //value = encoder ticks
+                motorPosDelta = 64;
+                break;
+            case DPAD_RIGHT_DOWN:
+                //value = encoder ticks
+                //controlling distance we move the motor
+                motorPosDelta = 16;
                 break;
         }
     }
