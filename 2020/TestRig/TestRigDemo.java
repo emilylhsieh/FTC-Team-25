@@ -21,9 +21,10 @@ public class TestRigDemo extends Robot {
 
     private GamepadTask gamepad1Task;
     private SelectModes modes;
+    private IndepMotorMode indepMode;
     private SelectModes.TestRigMode selectedTestRigMode;
     // initializing gamepadControlChoice (of type GamepadControlChoice) to GamepadControlChoice.SELECT_TESTRIG_MODE;
-    private GamepadControlChoice gamepadControlChoice = GamepadControlChoice.SELECT_TESTRIG_MODE;
+    private GamepadControlChoice gamepadControlChoice = GamepadControlChoice.INDEP_MOTOR_CONTROL;
     private SelectModes.TestRigMode selectedMode;
 
     // this init method is called when the init button is pressed on the driver station
@@ -31,6 +32,8 @@ public class TestRigDemo extends Robot {
     public void init() {
         // here we instantiate the SelectModes - set aside memory for that class
         modes = new SelectModes(this);
+        indepMode = new IndepMotorMode(this);
+
         // here we instantiate the GamepadTask - set aside memory for that class
         gamepad1Task = new GamepadTask(this, GamepadTask.GamepadNumber.GAMEPAD_1);
         // begins monitoring the gamepad controls and generates gamepad events when the controls are pressed
@@ -43,16 +46,16 @@ public class TestRigDemo extends Robot {
 
         switch (selectedTestRigMode) {
             case INDEP_MOTOR:
-              //  gamepadControlChoice = INDEP_MOTOR_CONTROL;
+                gamepadControlChoice = GamepadControlChoice.INDEP_MOTOR_CONTROL;
                 break;
             case SERVO:
-              //  gamepadControlChoice = SERVO_CONTROL;
+                gamepadControlChoice = GamepadControlChoice.SERVO_CONTROL;
                 break;
             case DRIVE:
-             //   gamepadControlChoice = DRIVE_CONTROL;
+                gamepadControlChoice = GamepadControlChoice.DRIVE_CONTROL;
                 break;
             case SERVO_N_DRIVE:
-            //    gamepadControlChoice = SERVO_N_DRIVE_CONTROL;
+                gamepadControlChoice = GamepadControlChoice.SERVO_N_DRIVE_CONTROL;
                 break;
             default:
                 // Print useful error message
@@ -74,6 +77,7 @@ public class TestRigDemo extends Robot {
                     modes.setUpGamepad1ForModeSelection(event);
                     break;
                 case INDEP_MOTOR_CONTROL:
+                    indepMode.setUpGamepadForMotorControl(event);
                     break;
                 case SERVO_CONTROL:
                     break;

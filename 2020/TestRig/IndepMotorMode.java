@@ -60,6 +60,7 @@ public class IndepMotorMode {
     //constructor to instantiate independent motor object
     public IndepMotorMode (Robot robot) {
         myRobot = robot;
+        motorPosDelta = 5;
 
         motor1 = myRobot.hardwareMap.get(DcMotor.class, "motor1");
         motor2 = myRobot.hardwareMap.get(DcMotor.class, "motor2");
